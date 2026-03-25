@@ -31,7 +31,7 @@ description = "Prefer for verifying APIs, frameworks, and source-sensitive claim
 config_file = "agents/docs-researcher.toml"
 
 [agents.committer]
-description = "Prefer by default at the end of any turn that leaves repository file updates, so the CRM repository stays continuously committed with small non-interactive commits and, when a GitHub remote exists, pushed upstream."
+description = "Fast-path git helper for automatic end-of-turn commit and push with minimal inspection unless the worktree scope is ambiguous."
 config_file = "agents/committer.toml"
 
 [agents.monitor]
