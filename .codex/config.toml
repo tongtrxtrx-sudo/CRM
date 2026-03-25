@@ -31,7 +31,7 @@ description = "Prefer for verifying APIs, frameworks, and source-sensitive claim
 config_file = "agents/docs-researcher.toml"
 
 [agents.committer]
-description = "Prefer only when the parent explicitly wants staged groups, commit-message drafting, or non-interactive git commits."
+description = "Prefer by default at the end of any turn that leaves repository file updates, so the CRM repository stays continuously committed with small non-interactive commits."
 config_file = "agents/committer.toml"
 
 [agents.monitor]
