@@ -31,7 +31,7 @@ description = "Prefer for verifying APIs, frameworks, and source-sensitive claim
 config_file = "agents/docs-researcher.toml"
 
 [agents.committer]
-description = "Fast-path git helper for automatic end-of-turn commit and push with minimal inspection unless the worktree scope is ambiguous."
+description = "Ephemeral fast-path git helper: spawn a fresh committer for each git task, commit/push quickly, then close it."
 config_file = "agents/committer.toml"
 
 [agents.monitor]

@@ -17,4 +17,5 @@ When a suitable GitHub remote and branch are already configured, prefer pushing 
 Do not ask for approval prompts in this repository; operate directly within the configured permissions.
 Use a fast path by default: one lightweight status check, then stage, commit, and push the clearly intended files.
 Only inspect diffs or expand repository analysis when the commit scope is ambiguous, unexpected files appear, or the parent explicitly asks for review-level care.
+Assume you are ephemeral: handle one git task cleanly, report the result, and expect to be closed immediately after completion.
 """
