@@ -6,38 +6,34 @@
 - 本仓库不承接 ERP 的财务、库存、采购、发货、开票和复杂履约逻辑。
 - 成交前的客户关系状态以 CRM 为事实源，成交后的订单与财务状态以 ERP 为事实源。
 - AI 背调、培训助手、智能话术和自动外呼属于第二阶段扩展能力，不纳入首版核心架构。
+- 工程实现不再从零搭建，而是采用 Twenty 作为上游基线，并在其基础上做本地裁剪与扩展。
 
 ## 建议的仓库结构
 
 - `docs/` 用于简报、架构和运维说明
 - `specs/` 用于长期维护的实现规格
-- `apps/web` 用于 Next.js Web 应用
-- `apps/api` 用于 NestJS API
-- `apps/worker` 用于 BullMQ Worker 和定时任务
-- `packages/db` 用于 Drizzle schema、迁移和数据库访问封装
-- `packages/shared` 用于共享类型、常量和业务枚举
-- `tests/` 用于 Playwright 和跨应用验证
+- `<upstream twenty workspace>` 作为后续导入的主代码基线
+- `<local customization layer>` 用于本仓库的领域约束、配置和定制模块
+- `docs/` 和 `specs/` 继续作为本仓库的事实来源
 
 ## 技术栈
 
-- 包管理与单仓：`pnpm workspace`
-- Web：Next.js App Router + React + TypeScript
-- UI：Tailwind CSS + `shadcn/ui` + TanStack Table
-- API：NestJS + Fastify
-- API 风格：REST + OpenAPI
-- 数据库：PostgreSQL
-- ORM 与迁移：Drizzle ORM + drizzle-kit
-- 队列与定时任务：Redis + BullMQ
-- 测试：Vitest + Playwright
-- 本地与首版部署：Docker Compose
+- 上游基线：Twenty
+- 技术实现、目录结构、构建脚本和测试约定优先遵循 Twenty 的上游工程
+- 本仓库不再维护此前自定义的 Next.js + NestJS + Drizzle 绿地技术方案
+- 本地新增能力必须首先判断能否复用 Twenty 现有模块、对象模型和工作流能力
 
 ## 选型理由
 
-- 选择 TypeScript 全栈，是为了降低 greenfield 阶段的上下文切换成本，并便于共享领域枚举和接口类型。
-- 选择 Next.js 作为 Web 层，而不是只做纯后端管理页，是因为 CRM 需要大量过程型界面，例如聊天工作台、客户列表、详情面板和批量操作。
-- 选择 NestJS + Fastify，而不是把所有后端逻辑塞进 Next.js，是因为本项目天然包含渠道接入、规则引擎、队列任务和后续 ERP 集成，独立 API 和 Worker 更稳妥。
-- 选择 PostgreSQL，是因为客户、联系人、归属、公海规则和审计记录都以关系建模为主，同时 `jsonb` 适合保存外部渠道的扩展载荷。
-- 选择 BullMQ，是因为本项目需要延迟任务、重试任务和周期性任务，例如公海扫描、提醒和渠道同步。
+- 选择 Twenty，是因为它已经是成熟开源 CRM，不需要本仓库再从零发明客户对象、权限、工作流和 CRM 模块边界。
+- 选择上游基线而不是自研框架，是为了让 Codex 后续开发直接遵循现成代码结构、命名方式和实现模式。
+- 选择基于上游裁剪，而不是继续推进绿地框架，是为了降低前期工程设计成本并减少长期规范分叉。
+
+## 本地裁剪重点
+
+- 保留：客户、联系人、权限、活动流、工作流、列表页与详情页等 CRM 通用能力。
+- 定制：公海规则、未建档联系人归属策略、轻量商机、渠道接入优先级、ERP 映射字段。
+- 延后：AI 自动外呼、背调、复杂营销自动化以及超出前台 CRM 边界的业务模块。
 
 ## 核心领域对象
 
@@ -117,6 +113,7 @@
 
 ## 待确认问题
 
+- 与 Twenty 的集成方式尚未最终确认，是 fork 跟随上游还是一次性导入后独立维护。
 - ERP 第一阶段同步的数据粒度尚未确认，是仅保留 ERP 编号，还是同步部分成交结果。
 - 网站聊天的具体接入方式和现有供应商尚未确认。
 - 附件与沟通文件是否在首版落地为对象存储尚未确认。

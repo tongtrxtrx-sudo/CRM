@@ -5,8 +5,8 @@
 ## 项目摘要
 
 - 当前仓库处于 greenfield 阶段，先做需求、范围、架构和 MVP 拆解，再进入实现。
-- 目标是沉淀一套可持续维护的 CRM 仓库骨架，而不是一次性写完所有功能。
-- 产品、技术栈和部署方式还未最终确认，新的实现决策必须先回写到简报和规格中。
+- 目标是基于成熟 CRM 上游基线做二次开发和裁剪，而不是从零搭一套自定义框架。
+- 当前已确认采用 Twenty 作为上游基线，后续工程结构、模块组织和实现约定优先遵循上游项目，再在本仓库内落业务定制。
 - 当前最重要的事实来源是仓库内文档，而不是对话里的临时描述。
 
 ## 入口信息
@@ -28,6 +28,7 @@
 - [architecture.md](/D:/work/CRM/docs/architecture.md)：系统边界、组件划分和关键集成点。
 - [codex-kickoff.md](/D:/work/CRM/docs/codex-kickoff.md)：前几次会话的启动清单。
 - [guided-project-flow.md](/D:/work/CRM/docs/guided-project-flow.md)：推荐推进顺序。
+- [twenty-baseline.md](/D:/work/CRM/docs/twenty-baseline.md)：为何选择 Twenty 作为上游基线，以及本仓库的裁剪策略。
 - [mvp.md](/D:/work/CRM/specs/mvp.md)：实现规格和验证要求。
 
 ## 规范产物
@@ -35,8 +36,9 @@
 - 将以下文件视为当前仓库的事实来源：
 - [brief.md](/D:/work/CRM/docs/brief.md)
 - [architecture.md](/D:/work/CRM/docs/architecture.md)
+- [twenty-baseline.md](/D:/work/CRM/docs/twenty-baseline.md)
 - [mvp.md](/D:/work/CRM/specs/mvp.md)
-- 当 CRM 的实体模型、关键流程、权限模型或集成边界发生变化时，先更新这些文档，再改代码。
+- 当 CRM 的实体模型、关键流程、权限模型、集成边界或上游基线策略发生变化时，先更新这些文档，再改代码。
 
 ## 仓库级路由
 
@@ -142,6 +144,7 @@
 - 在当前 greenfield 阶段，开始任何非平凡工作前，优先读取：
 - [brief.md](/D:/work/CRM/docs/brief.md)
 - [architecture.md](/D:/work/CRM/docs/architecture.md)
+- [twenty-baseline.md](/D:/work/CRM/docs/twenty-baseline.md)
 - [mvp.md](/D:/work/CRM/specs/mvp.md)
 - [codex-kickoff.md](/D:/work/CRM/docs/codex-kickoff.md)
 - 如果后续新增了数据模型、权限模型、集成清单或迁移文档，把它们加入这里。
@@ -154,11 +157,12 @@
 
 ## 完成门槛
 
-- 在技术栈未定前，不把“模板文件已生成”视为功能完成。
 - 当新增或调整实体、流程、权限、集成时，必须同步更新：
   - [brief.md](/D:/work/CRM/docs/brief.md)
   - [architecture.md](/D:/work/CRM/docs/architecture.md)
+  - [twenty-baseline.md](/D:/work/CRM/docs/twenty-baseline.md)
   - [mvp.md](/D:/work/CRM/specs/mvp.md)
+- 当本仓库对 Twenty 的采用方式、裁剪范围或上游同步策略变化时，必须先更新 [twenty-baseline.md](/D:/work/CRM/docs/twenty-baseline.md)。
 - 在声称任务完成前，必须提供真实验证证据；如果验证命令尚未建立，需要明确说明缺口。
 - 需要提交 git 历史时，优先保持提交小而清晰。
 - 若当前轮对仓库文件有更新，回答完成前默认调用 `Committer` 提交一次逻辑清晰的 commit。
