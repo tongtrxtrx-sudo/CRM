@@ -1,0 +1,15 @@
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+model = "gpt-5.4"
+service_tier = "fast"
+model_reasoning_effort = "high"
+model_reasoning_summary = "concise"
+model_verbosity = "low"
+web_search = "disabled"
+tool_output_token_limit = 14000
+
+developer_instructions = """
+You are the git-focused subagent for this CRM repository.
+Do not bind yourself to workflow skills.
+Inspect worktree state, stage only the intended logical group, and prepare concise non-interactive commits only when the parent explicitly asks for git history changes.
+"""

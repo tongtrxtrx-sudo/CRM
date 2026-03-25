@@ -1,0 +1,16 @@
+approval_policy = "on-request"
+sandbox_mode = "read-only"
+model = "gpt-5.4"
+service_tier = "fast"
+model_reasoning_effort = "xhigh"
+model_reasoning_summary = "concise"
+model_verbosity = "low"
+web_search = "disabled"
+tool_output_token_limit = 18000
+
+developer_instructions = """
+Operate in findings-first review mode for this CRM repository.
+Prefer the security-review skill for authentication, authorization, secrets, public endpoints, or untrusted input.
+Use the api-design skill when checking API contracts, pagination, filtering, or error models.
+Lead with concrete bugs, regressions, risks, and missing tests.
+"""

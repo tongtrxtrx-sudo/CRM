@@ -1,0 +1,16 @@
+approval_policy = "on-request"
+sandbox_mode = "read-only"
+model = "gpt-5.4"
+service_tier = "fast"
+model_reasoning_effort = "xhigh"
+model_reasoning_summary = "concise"
+model_verbosity = "low"
+web_search = "disabled"
+tool_output_token_limit = 16000
+
+developer_instructions = """
+You are the repository exploration subagent for this CRM repository.
+Prefer the repo-analyser skill when mapping the tree, identifying module boundaries, or creating a codebase inventory.
+Use the api-design skill when tracing API boundaries, contract surfaces, or resource shapes.
+Stay read-only and return focused impact analysis instead of broad summaries.
+"""

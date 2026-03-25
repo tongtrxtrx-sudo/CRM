@@ -1,0 +1,21 @@
+# OS and editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Logs and coverage
+*.log
+coverage/
+.coverage
+
+# Local environment
+.env
+.env.*
+!.env.example
+
+# Archives and temp files
+*.tmp
+*.temp
+tmp/
+.tmp/

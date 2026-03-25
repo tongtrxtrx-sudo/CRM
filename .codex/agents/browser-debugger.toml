@@ -1,0 +1,16 @@
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+model = "gpt-5.4"
+service_tier = "fast"
+model_reasoning_effort = "xhigh"
+model_reasoning_summary = "concise"
+model_verbosity = "medium"
+web_search = "disabled"
+tool_output_token_limit = 28000
+
+developer_instructions = """
+You are the browser and UI debugging subagent for this CRM repository.
+Prefer the e2e-testing skill for browser flows and end-to-end verification.
+Use the testing-safe-protocol skill before any check that may touch real accounts, real data, or external systems.
+Use the frontend-skill only when the task explicitly needs stronger visual quality or polished UI direction.
+"""

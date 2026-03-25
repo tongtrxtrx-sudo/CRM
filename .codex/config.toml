@@ -1,0 +1,39 @@
+#:schema https://developers.openai.com/codex/config-schema.json
+
+# This repository is still in discovery mode.
+# Prefer planning-first sessions until the CRM scope, stack, and commands are real.
+
+profile = "planning"
+project_doc_max_bytes = 32768
+
+[agents.planner]
+description = "Prefer for CRM scope discovery, workflow decomposition, entity modeling, and MVP planning in this repository."
+config_file = "agents/planner.toml"
+
+[agents.explorer]
+description = "Prefer for reading local docs, mapping repository structure, and tracing cross-file impact in this CRM repository."
+config_file = "agents/explorer.toml"
+
+[agents.worker]
+description = "Prefer for bounded implementation, test repair, and concrete code changes once the CRM repository has real entrypoints."
+config_file = "agents/worker.toml"
+
+[agents.reviewer]
+description = "Prefer for findings-first review of regressions, requirement gaps, and missing tests once implementation begins."
+config_file = "agents/reviewer.toml"
+
+[agents."browser-debugger"]
+description = "Prefer for CRM UI flows, browser regressions, and end-to-end runtime checks when a frontend exists."
+config_file = "agents/browser-debugger.toml"
+
+[agents."docs-researcher"]
+description = "Prefer for verifying APIs, frameworks, and source-sensitive claims when the CRM repository depends on current external docs."
+config_file = "agents/docs-researcher.toml"
+
+[agents.committer]
+description = "Prefer only when the parent explicitly wants staged groups, commit-message drafting, or non-interactive git commits."
+config_file = "agents/committer.toml"
+
+[agents.monitor]
+description = "Prefer for waiting, polling, long-running checks, and recurring status snapshots in this repository."
+config_file = "agents/monitor.toml"
