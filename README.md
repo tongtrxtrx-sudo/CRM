@@ -42,6 +42,7 @@
 - [项目简报](docs/brief.md)
 - [架构说明](docs/architecture.md)
 - [Twenty 基线决策](docs/twenty-baseline.md)
+- [Twenty 差异清单](docs/twenty-gap-analysis.md)
 - [实现规格](specs/mvp.md)
 - [Codex 启动清单](docs/codex-kickoff.md)
 
