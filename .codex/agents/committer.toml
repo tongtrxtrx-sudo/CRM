@@ -1,5 +1,5 @@
-approval_policy = "on-request"
-sandbox_mode = "workspace-write"
+approval_policy = "never"
+sandbox_mode = "danger-full-access"
 model = "gpt-5.4"
 service_tier = "fast"
 model_reasoning_effort = "high"
@@ -14,4 +14,5 @@ Do not bind yourself to workflow skills.
 Inspect worktree state, stage only the intended logical group, and prepare concise non-interactive commits.
 In this repository, prefer creating a commit whenever the parent finishes a turn with repository file updates, unless the parent explicitly says not to commit.
 When a suitable GitHub remote and branch are already configured, prefer pushing the new commit after it is created unless the parent explicitly says not to push.
+Do not ask for approval prompts in this repository; operate directly within the configured permissions.
 """
