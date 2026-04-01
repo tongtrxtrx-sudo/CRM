@@ -192,7 +192,10 @@
   - 当前已完成 `twenty-ui:generateBarrels` 与 `twenty-shared:generateBarrels` 的 Windows 收口验证
   - `twenty-shared:build` 已通过
   - `twenty-ui:build` 已通过
-  - 当前下一步应转向 `twenty-front` 或应用级启动验证，而不是继续处理 `generateBarrels`
+  - `twenty-front:build` 已通过
+  - 前端构建在 Windows 下已完成 runtime env 注入，`build/index.html` 中的 `window._env_` 已被成功写入
+  - 当前剩余的是非阻塞构建告警，例如大 chunk 告警、`Browserslist` 数据较旧告警，以及部分第三方模块的 Vite/Rollup 告警
+  - 当前下一步应转向 `twenty-front:start/preview` 或更高一级的应用启动验证
 
 ### 阶段 8 - 第二轮本地扩展
 
