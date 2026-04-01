@@ -180,16 +180,19 @@
     - 直接执行 `yarn tsx packages/twenty-ui/scripts/generateBarrels.ts` 与 `yarn tsx packages/twenty-shared/scripts/generateBarrels.ts` 时，两者总耗时都约 `200ms`
     - `glob`、导出扫描、`prettier` 格式化与 `fs.writeFileSync` 均为毫秒级，不是性能瓶颈
     - Windows 下 `nx:run-commands` 调起 `tsx` 时存在收尾异常，已通过在 `generateBarrels.ts` 末尾显式退出进程绕过
-  - 当前新的构建阻塞为上游导入残留的空文件：
+  - 已修复上游导入残留的空文件：
     - `packages/twenty-shared/src/database-events/object-record-restore.event.ts`
     - `packages/twenty-ui/src/layout/animated-expandable-container/types/AnimationDurations.ts`
-    - 另外还扫描到其他 0 字节 TS/TSX 文件，说明当前首要问题已从执行路径转为上游文件完整性
+    - `packages/twenty-ui/src/display/text/components/__stories__/SeparatorLineText.stories.tsx`
+  - 扫描确认剩余的两个 0 字节文件在 `v1.16.0` 上游本来就是空文件：
+    - `packages/twenty-front/src/modules/settings/two-factor-authentication/hooks/useTwoFactorAuthentication.ts`
+    - `packages/twenty-front/src/utils/format/number.ts`
 - 当前结论：
-  - 不能声称“已完成最小构建验证”
   - 当前已完成“依赖安装验证”和“Nx 项目图验证”
   - 当前已完成 `twenty-ui:generateBarrels` 与 `twenty-shared:generateBarrels` 的 Windows 收口验证
-  - `twenty-ui:build` 已能越过 `generateBarrels` 阶段并继续执行
-  - 下一步应优先修复导入时遗留的 0 字节源码文件，再继续完整构建验证
+  - `twenty-shared:build` 已通过
+  - `twenty-ui:build` 已通过
+  - 当前下一步应转向 `twenty-front` 或应用级启动验证，而不是继续处理 `generateBarrels`
 
 ### 阶段 8 - 第二轮本地扩展
 
