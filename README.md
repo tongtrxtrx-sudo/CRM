@@ -32,6 +32,13 @@ node .yarn/releases/yarn-4.9.2.cjs --cwd packages/twenty-front run start:mock-ba
 node .yarn/releases/yarn-4.9.2.cjs run preview:front
 ```
 
+### CRM 字段落地
+
+```bash
+node .yarn/releases/yarn-4.9.2.cjs run crm:fields:plan
+node .yarn/releases/yarn-4.9.2.cjs run crm:fields:apply
+```
+
 ### 测试
 
 ```bash
@@ -67,3 +74,4 @@ node .yarn/releases/yarn-4.9.2.cjs nx run twenty-front:build
   - 先启动 `packages/twenty-front` 下的 `start:mock-backend`
   - 再从仓库根目录运行 `preview:front`
   - 该入口支持 SPA history fallback，可直接访问 `/welcome`
+- 当前第一批 `Company` / `Person` CRM 字段通过 Twenty 的 object metadata custom field 流落地

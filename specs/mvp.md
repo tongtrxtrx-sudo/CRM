@@ -35,6 +35,26 @@
 - 工程约定：目录、模块、命名、脚本和测试方式优先遵循 Twenty 的上游规则。
 - 本地实现：只围绕本规格中的前台 CRM 约束做裁剪与扩展，不再继续此前的自定义绿地技术方案。
 - 上游同步：本地定制应尽量保持低分叉，避免无必要地重写上游已有 CRM 能力。
+- 第一批对象差异：优先通过 Twenty 的 `field-metadata` custom field 流给 `Company` / `Person` 增加 CRM 字段。
+
+## 第一批字段落地
+
+- Company：
+  - `crmOwnershipStatus`
+  - `crmPrimarySourceChannel`
+  - `crmErpCode`
+  - `crmLastAcquiredAt`
+  - `crmLastFollowedUpAt`
+  - `crmLastClosedWonAt`
+  - `crmExpectedPoolReturnAt`
+- Person：
+  - `crmSourceChannel`
+  - `crmSourceCapturedAt`
+  - `crmWhatsappId`
+  - `crmWechatId`
+  - `crmAliwangwangId`
+  - `crmFacebookId`
+  - `crmIsPrimaryContact`
 
 ## 需求
 

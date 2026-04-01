@@ -208,6 +208,8 @@
   "version": "0.2.1",
   "nx": {},
   "scripts": {
+    "crm:fields:apply": "node packages/twenty-front/scripts/apply-crm-company-person-fields.mjs --apply",
+    "crm:fields:plan": "node packages/twenty-front/scripts/apply-crm-company-person-fields.mjs",
     "docs:generate": "tsx packages/twenty-docs/scripts/generate-docs-json.ts",
     "docs:generate-navigation-template": "tsx packages/twenty-docs/scripts/generate-navigation-template.ts",
     "preview:front": "node packages/twenty-front/scripts/preview-static.mjs",

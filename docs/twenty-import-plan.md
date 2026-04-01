@@ -199,6 +199,10 @@
     - `node packages/twenty-front/scripts/mock-preview-backend.mjs`
     - 或使用 `packages/twenty-front/package.json` 中的 `start:mock-backend`
     - 当前已覆盖欢迎页邮箱继续所需的最小 GraphQL 操作，包括 `GetPublicWorkspaceDataByDomain`、`TrackAnalytics`、`IntrospectionQuery`、`CheckUserExists`
+  - 已新增第一批 CRM 字段落地脚本：
+    - `node .yarn/releases/yarn-4.9.2.cjs run crm:fields:plan`
+    - `node .yarn/releases/yarn-4.9.2.cjs run crm:fields:apply`
+  - 当前第一批字段采取 `Company` / `Person` 的 metadata custom field 策略，而不是修改当前导入分支中缺失的标准对象源码
   - 已新增本地静态预览入口，支持 SPA history fallback：
     - `node .yarn/releases/yarn-4.9.2.cjs run preview:front`
     - 或直接运行 `packages/twenty-front/package.json` 中的 `preview:static`

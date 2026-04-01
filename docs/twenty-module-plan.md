@@ -22,6 +22,7 @@
 - 首版要求：
   - 保留客户列表和详情页
   - 扩展 ERP 编号、来源渠道、重点标记、客户星级、最近获得时间、最近跟进时间、最近成交时间等字段
+  - 第一批实际落地优先走 custom field metadata，而不是硬改缺失的标准对象源码
 
 ### 2. People
 
@@ -31,6 +32,7 @@
   - 扩展 WhatsApp、WeChat、阿里旺旺、Facebook ID 等字段
   - 支持与 Companies 关联
   - 后续为“未建档联系人”策略做本地扩展
+  - 第一批实际落地优先走 custom field metadata，而不是硬改缺失的标准对象源码
 
 ### 3. Opportunities
 

@@ -1,3 +1,4 @@
+import crypto from 'node:crypto';
 import http from 'node:http';
 
 const port = Number(process.env.MOCK_BACKEND_PORT ?? 3000);
@@ -78,6 +79,19 @@ const publicWorkspaceDataByDomain = {
     microsoft: false,
   },
 };
+
+const objectMetadataStore = [
+  {
+    id: 'mock-company-object-metadata-id',
+    nameSingular: 'company',
+    fieldsList: [],
+  },
+  {
+    id: 'mock-person-object-metadata-id',
+    nameSingular: 'person',
+    fieldsList: [],
+  },
+];
 
 const checkUserExists = {
   __typename: 'CheckUserExistOutput',
@@ -186,6 +200,90 @@ const server = http.createServer(async (request, response) => {
             types: [],
             directives: [],
           },
+        },
+      });
+      return;
+    }
+
+    if (operationName === 'CrmObjectMetadataItems') {
+      json(request, response, 200, {
+        data: {
+          objects: {
+            edges: objectMetadataStore.map((node) => ({
+              node,
+            })),
+          },
+        },
+      });
+      return;
+    }
+
+    if (operationName === 'CreateOneFieldMetadataItem') {
+      const fieldInput = body.variables?.input?.field;
+      const objectMetadata = objectMetadataStore.find(
+        (item) => item.id === fieldInput?.objectMetadataId,
+      );
+
+      if (!objectMetadata) {
+        json(request, response, 200, {
+          errors: [
+            {
+              message: `Object metadata ${fieldInput?.objectMetadataId ?? 'unknown'} not found`,
+            },
+          ],
+        });
+        return;
+      }
+
+      const createdField = {
+        id: crypto.randomUUID(),
+        name: fieldInput.name,
+        label: fieldInput.label,
+        type: fieldInput.type,
+        description: fieldInput.description ?? null,
+        icon: fieldInput.icon ?? null,
+        defaultValue: fieldInput.defaultValue ?? null,
+        options: fieldInput.options ?? null,
+      };
+
+      objectMetadata.fieldsList.push(createdField);
+
+      json(request, response, 200, {
+        data: {
+          createOneField: createdField,
+        },
+      });
+      return;
+    }
+
+    if (operationName === 'UpdateOneFieldMetadataItem') {
+      const fieldMetadataId = body.variables?.idToUpdate;
+      const updatePayload = body.variables?.updatePayload ?? {};
+
+      const objectMetadata = objectMetadataStore.find((item) =>
+        item.fieldsList.some((field) => field.id === fieldMetadataId),
+      );
+
+      const existingField = objectMetadata?.fieldsList.find(
+        (field) => field.id === fieldMetadataId,
+      );
+
+      if (!objectMetadata || !existingField) {
+        json(request, response, 200, {
+          errors: [
+            {
+              message: `Field metadata ${fieldMetadataId ?? 'unknown'} not found`,
+            },
+          ],
+        });
+        return;
+      }
+
+      Object.assign(existingField, updatePayload);
+
+      json(request, response, 200, {
+        data: {
+          updateOneField: existingField,
         },
       });
       return;
