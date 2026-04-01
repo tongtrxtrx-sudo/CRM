@@ -1,4 +1,5 @@
 import { DEFAULT_PERSON_RECORD_PAGE_LAYOUT_ID } from '@/page-layout/constants/DefaultPersonRecordPageLayoutId';
+import { DEFAULT_PERSON_CRM_FIELDS_CONFIGURATION } from '@/page-layout/constants/DefaultCrmFieldsConfigurations';
 import { type PageLayout } from '@/page-layout/types/PageLayout';
 import { PageLayoutType, WidgetType } from '~/generated/graphql';
 
@@ -39,9 +40,8 @@ export const DEFAULT_PERSON_RECORD_PAGE_LAYOUT: PageLayout = {
             columnSpan: 12,
           },
           configuration: {
-            __typename: 'FieldsConfiguration',
+            ...DEFAULT_PERSON_CRM_FIELDS_CONFIGURATION,
             configurationType: 'FIELDS',
-            sections: [],
           },
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),

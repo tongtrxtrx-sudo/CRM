@@ -80,17 +80,175 @@ const publicWorkspaceDataByDomain = {
   },
 };
 
+const createMockField = ({
+  objectNameSingular,
+  name,
+  label,
+  type,
+  isCustom = false,
+}) => ({
+  id: `mock-${objectNameSingular}-${name}-field-id`,
+  name,
+  label,
+  type,
+  isCustom,
+  description: null,
+  icon: null,
+  defaultValue: null,
+  options: null,
+});
+
 const objectMetadataStore = [
   {
     id: 'mock-company-object-metadata-id',
     nameSingular: 'company',
-    fieldsList: [],
+    fieldsList: [
+      createMockField({
+        objectNameSingular: 'company',
+        name: 'name',
+        label: 'Name',
+        type: 'TEXT',
+      }),
+      createMockField({
+        objectNameSingular: 'company',
+        name: 'domainName',
+        label: 'Domain Name',
+        type: 'LINKS',
+      }),
+      createMockField({
+        objectNameSingular: 'company',
+        name: 'accountOwner',
+        label: 'Account Owner',
+        type: 'RELATION',
+      }),
+      createMockField({
+        objectNameSingular: 'company',
+        name: 'address',
+        label: 'Address',
+        type: 'ADDRESS',
+      }),
+      createMockField({
+        objectNameSingular: 'company',
+        name: 'employees',
+        label: 'Employees',
+        type: 'NUMBER',
+      }),
+      createMockField({
+        objectNameSingular: 'company',
+        name: 'annualRecurringRevenue',
+        label: 'Annual Recurring Revenue',
+        type: 'CURRENCY',
+      }),
+      createMockField({
+        objectNameSingular: 'company',
+        name: 'idealCustomerProfile',
+        label: 'Ideal Customer Profile',
+        type: 'BOOLEAN',
+      }),
+      createMockField({
+        objectNameSingular: 'company',
+        name: 'linkedinLink',
+        label: 'LinkedIn',
+        type: 'LINKS',
+      }),
+      createMockField({
+        objectNameSingular: 'company',
+        name: 'xLink',
+        label: 'X',
+        type: 'LINKS',
+      }),
+    ],
   },
   {
     id: 'mock-person-object-metadata-id',
     nameSingular: 'person',
-    fieldsList: [],
+    fieldsList: [
+      createMockField({
+        objectNameSingular: 'person',
+        name: 'name',
+        label: 'Name',
+        type: 'FULL_NAME',
+      }),
+      createMockField({
+        objectNameSingular: 'person',
+        name: 'company',
+        label: 'Company',
+        type: 'RELATION',
+      }),
+      createMockField({
+        objectNameSingular: 'person',
+        name: 'jobTitle',
+        label: 'Job Title',
+        type: 'TEXT',
+      }),
+      createMockField({
+        objectNameSingular: 'person',
+        name: 'city',
+        label: 'City',
+        type: 'TEXT',
+      }),
+      createMockField({
+        objectNameSingular: 'person',
+        name: 'emails',
+        label: 'Emails',
+        type: 'EMAILS',
+      }),
+      createMockField({
+        objectNameSingular: 'person',
+        name: 'phones',
+        label: 'Phones',
+        type: 'PHONES',
+      }),
+      createMockField({
+        objectNameSingular: 'person',
+        name: 'linkedinLink',
+        label: 'LinkedIn',
+        type: 'LINKS',
+      }),
+      createMockField({
+        objectNameSingular: 'person',
+        name: 'xLink',
+        label: 'X',
+        type: 'LINKS',
+      }),
+      createMockField({
+        objectNameSingular: 'person',
+        name: 'intro',
+        label: 'Intro',
+        type: 'TEXT',
+      }),
+    ],
   },
+];
+
+const createMockIndexView = ({
+  id,
+  objectMetadataId,
+  name,
+  icon,
+}) => ({
+  id,
+  name,
+  objectMetadataId,
+  key: 'INDEX',
+  icon,
+  position: 0,
+  viewFields: [],
+});
+
+const coreViewsStore = [
+  createMockIndexView({
+    id: 'mock-company-index-view-id',
+    objectMetadataId: 'mock-company-object-metadata-id',
+    name: 'All companies',
+    icon: 'IconSkyline',
+  }),
+  createMockIndexView({
+    id: 'mock-person-index-view-id',
+    objectMetadataId: 'mock-person-object-metadata-id',
+    name: 'All people',
+    icon: 'IconPerson',
+  }),
 ];
 
 const checkUserExists = {
@@ -240,6 +398,7 @@ const server = http.createServer(async (request, response) => {
         name: fieldInput.name,
         label: fieldInput.label,
         type: fieldInput.type,
+        isCustom: true,
         description: fieldInput.description ?? null,
         icon: fieldInput.icon ?? null,
         defaultValue: fieldInput.defaultValue ?? null,
@@ -284,6 +443,115 @@ const server = http.createServer(async (request, response) => {
       json(request, response, 200, {
         data: {
           updateOneField: existingField,
+        },
+      });
+      return;
+    }
+
+    if (operationName === 'FindManyCoreViews') {
+      const objectMetadataId = body.variables?.objectMetadataId;
+      const views =
+        typeof objectMetadataId === 'string'
+          ? coreViewsStore.filter(
+              (view) => view.objectMetadataId === objectMetadataId,
+            )
+          : coreViewsStore;
+
+      json(request, response, 200, {
+        data: {
+          getCoreViews: views,
+        },
+      });
+      return;
+    }
+
+    if (operationName === 'CreateCoreView') {
+      const input = body.variables?.input ?? {};
+      const createdView = {
+        id: input.id ?? crypto.randomUUID(),
+        name: input.name,
+        objectMetadataId: input.objectMetadataId,
+        key: input.key ?? null,
+        icon: input.icon ?? 'IconList',
+        position: input.position ?? coreViewsStore.length,
+        viewFields: [],
+      };
+
+      coreViewsStore.push(createdView);
+
+      json(request, response, 200, {
+        data: {
+          createCoreView: createdView,
+        },
+      });
+      return;
+    }
+
+    if (operationName === 'CreateManyCoreViewFields') {
+      const inputs = Array.isArray(body.variables?.inputs)
+        ? body.variables.inputs
+        : [];
+
+      const createdViewFields = inputs.map((input) => ({
+        id: input.id ?? crypto.randomUUID(),
+        fieldMetadataId: input.fieldMetadataId,
+        viewId: input.viewId,
+        isVisible: input.isVisible ?? true,
+        position: input.position ?? 0,
+        size: input.size ?? 100,
+        aggregateOperation: input.aggregateOperation ?? null,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        deletedAt: null,
+      }));
+
+      for (const createdViewField of createdViewFields) {
+        const view = coreViewsStore.find(
+          (coreView) => coreView.id === createdViewField.viewId,
+        );
+
+        if (view) {
+          view.viewFields.push(createdViewField);
+        }
+      }
+
+      json(request, response, 200, {
+        data: {
+          createManyCoreViewFields: createdViewFields,
+        },
+      });
+      return;
+    }
+
+    if (operationName === 'UpdateCoreViewField') {
+      const input = body.variables?.input ?? {};
+
+      const view = coreViewsStore.find((coreView) =>
+        coreView.viewFields.some((viewField) => viewField.id === input.id),
+      );
+
+      const existingViewField = view?.viewFields.find(
+        (viewField) => viewField.id === input.id,
+      );
+
+      if (!view || !existingViewField) {
+        json(request, response, 200, {
+          errors: [
+            {
+              message: `View field ${input.id ?? 'unknown'} not found`,
+            },
+          ],
+        });
+        return;
+      }
+
+      Object.assign(existingViewField, input.update ?? {}, {
+        updatedAt: new Date().toISOString(),
+      });
+
+      json(request, response, 200, {
+        data: {
+          updateCoreViewField: existingViewField,
         },
       });
       return;

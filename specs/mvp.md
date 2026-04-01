@@ -56,6 +56,37 @@
   - `crmFacebookId`
   - `crmIsPrimaryContact`
 
+## 第一批默认落点
+
+- `Company` 详情页 `Home` 分组：
+  - `Basic Info`：`name`、`domainName`、`accountOwner`、`address`
+  - `CRM Management`：`crmOwnershipStatus`、`crmPrimarySourceChannel`、`crmErpCode`
+  - `Key Dates`：`crmLastAcquiredAt`、`crmLastFollowedUpAt`、`crmLastClosedWonAt`、`crmExpectedPoolReturnAt`
+  - `Company Profile`：`employees`、`annualRecurringRevenue`、`idealCustomerProfile`、`linkedinLink`、`xLink`
+- `Person` 详情页 `Home` 分组：
+  - `Basic Info`：`name`、`company`、`crmIsPrimaryContact`、`jobTitle`、`city`
+  - `Primary Contacts`：`emails`、`phones`、`crmWhatsappId`
+  - `Channel Identities`：`crmWechatId`、`crmAliwangwangId`、`crmFacebookId`、`linkedinLink`、`xLink`
+  - `CRM Source`：`crmSourceChannel`、`crmSourceCapturedAt`
+- `Company` 默认列表列：
+  - `name`
+  - `domainName`
+  - `crmOwnershipStatus`
+  - `accountOwner`
+  - `crmPrimarySourceChannel`
+  - `crmErpCode`
+  - `crmLastFollowedUpAt`
+  - `crmExpectedPoolReturnAt`
+- `Person` 默认列表列：
+  - `name`
+  - `company`
+  - `crmIsPrimaryContact`
+  - `emails`
+  - `phones`
+  - `crmWhatsappId`
+  - `crmSourceChannel`
+  - `crmSourceCapturedAt`
+
 ## 需求
 
 ### 功能需求

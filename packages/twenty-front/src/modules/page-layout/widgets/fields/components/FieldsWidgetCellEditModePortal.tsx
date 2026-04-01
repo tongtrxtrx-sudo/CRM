@@ -1,3 +1,4 @@
+import { type PageLayoutWidget } from '@/page-layout/types/PageLayoutWidget';
 import { type ObjectMetadataItem } from '@/object-metadata/types/ObjectMetadataItem';
 import { RecordFieldListInputContextProvider } from '@/object-record/record-field-list/anchored-portal/components/RecordFieldListInputContextProvider';
 import { RecordFieldListComponentInstanceContext } from '@/object-record/record-field-list/states/contexts/RecordFieldListComponentInstanceContext';
@@ -13,11 +14,13 @@ import { isDefined } from 'twenty-shared/utils';
 type FieldsWidgetCellEditModePortalProps = {
   objectMetadataItem: ObjectMetadataItem;
   recordId: string;
+  widget: PageLayoutWidget;
 };
 
 export const FieldsWidgetCellEditModePortal = ({
   objectMetadataItem,
   recordId,
+  widget,
 }: FieldsWidgetCellEditModePortalProps) => {
   const instanceId = useAvailableComponentInstanceIdOrThrow(
     RecordFieldListComponentInstanceContext,
@@ -27,9 +30,10 @@ export const FieldsWidgetCellEditModePortal = ({
     recordFieldListCellEditModePositionComponentState,
   );
 
-  const { flattenedFieldMetadataItems } = useFieldsWidgetFlattenedFields(
-    objectMetadataItem.nameSingular,
-  );
+  const { flattenedFieldMetadataItems } = useFieldsWidgetFlattenedFields({
+    objectNameSingular: objectMetadataItem.nameSingular,
+    widget,
+  });
 
   const editedFieldMetadataItem = isDefined(editModePosition)
     ? flattenedFieldMetadataItems.at(editModePosition)

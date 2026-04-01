@@ -28,28 +28,27 @@ export const filterAndOrderFieldsFromConfiguration = ({
 
   const sectionsWithFields = sortedSections
     .map((section) => {
-      const sectionFieldIds = new Set(
-        section.fields.map((f) => f.fieldMetadataId),
-      );
-
-      const visibleFields = availableFieldMetadataItems
-        .filter((fieldMetadataItem) =>
-          sectionFieldIds.has(fieldMetadataItem.id),
-        )
-        .filter((fieldMetadataItem) => {
-          const fieldConfig = section.fields.find(
-            (f) => f.fieldMetadataId === fieldMetadataItem.id,
+      const visibleFields = [...section.fields]
+        .sort((a, b) => a.position - b.position)
+        .map((fieldConfig) => {
+          const fieldMetadataItem = availableFieldMetadataItems.find(
+            (availableFieldMetadataItem) =>
+              availableFieldMetadataItem.id === fieldConfig.fieldMetadataId ||
+              availableFieldMetadataItem.name === fieldConfig.fieldMetadataId,
           );
 
-          if (!isDefined(fieldConfig)) {
-            return false;
+          if (!isDefined(fieldMetadataItem)) {
+            return null;
           }
 
-          return evaluateWidgetVisibility({
+          const isVisible = evaluateWidgetVisibility({
             conditionalDisplay: fieldConfig.conditionalDisplay,
             context,
           });
-        });
+
+          return isVisible ? fieldMetadataItem : null;
+        })
+        .filter(isDefined);
 
       if (visibleFields.length === 0) {
         return null;

@@ -1,4 +1,5 @@
 import { DEFAULT_COMPANY_RECORD_PAGE_LAYOUT_ID } from '@/page-layout/constants/DefaultCompanyRecordPageLayoutId';
+import { DEFAULT_COMPANY_CRM_FIELDS_CONFIGURATION } from '@/page-layout/constants/DefaultCrmFieldsConfigurations';
 import { type PageLayout } from '@/page-layout/types/PageLayout';
 import {
   PageLayoutType,
@@ -43,9 +44,8 @@ export const DEFAULT_COMPANY_RECORD_PAGE_LAYOUT: PageLayout = {
             columnSpan: 12,
           },
           configuration: {
-            __typename: 'FieldsConfiguration',
+            ...DEFAULT_COMPANY_CRM_FIELDS_CONFIGURATION,
             configurationType: WidgetConfigurationType.FIELDS,
-            sections: [],
           },
           createdAt: new Date().toISOString(),
           updatedAt: new Date().toISOString(),

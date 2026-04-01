@@ -203,6 +203,16 @@
     - `node .yarn/releases/yarn-4.9.2.cjs run crm:fields:plan`
     - `node .yarn/releases/yarn-4.9.2.cjs run crm:fields:apply`
   - 当前第一批字段采取 `Company` / `Person` 的 metadata custom field 策略，而不是修改当前导入分支中缺失的标准对象源码
+  - 已新增 `Company` / `Person` 默认列表列脚本：
+    - `node .yarn/releases/yarn-4.9.2.cjs run crm:views:plan`
+    - `node .yarn/releases/yarn-4.9.2.cjs run crm:views:apply`
+  - `crm:views:*` 当前通过 `CoreView(key=INDEX).viewFields` 为 `Company` / `Person` 补默认可见列，而不是依赖字段创建后的自动显示
+  - 默认 `Company` / `Person` 详情页 `Home` 分组已改为读取 `Fields` widget 的默认配置，并支持用字段名解析到真实 metadata id
+  - 已在本地 mock backend 上验证：
+    - 先运行 `crm:fields:apply`
+    - 再运行 `crm:views:plan -> crm:views:apply -> crm:views:plan`
+    - 最后一轮 `plan` 已对目标字段全部返回 `SKIP (...already aligned)`
+  - `twenty-front:build --skip-nx-cache --output-style=stream` 在本轮默认详情页分组和默认列表列改动后已重新通过
   - 已新增本地静态预览入口，支持 SPA history fallback：
     - `node .yarn/releases/yarn-4.9.2.cjs run preview:front`
     - 或直接运行 `packages/twenty-front/package.json` 中的 `preview:static`

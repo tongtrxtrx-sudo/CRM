@@ -1,3 +1,4 @@
+import { type PageLayoutWidget } from '@/page-layout/types/PageLayoutWidget';
 import { type ObjectMetadataItem } from '@/object-metadata/types/ObjectMetadataItem';
 import { RecordFieldListCellHoveredPortalContent } from '@/object-record/record-field-list/anchored-portal/components/RecordFieldListCellHoveredPortalContent';
 import { RecordFieldListInputContextProvider } from '@/object-record/record-field-list/anchored-portal/components/RecordFieldListInputContextProvider';
@@ -12,11 +13,13 @@ import { isDefined } from 'twenty-shared/utils';
 type FieldsWidgetCellHoveredPortalProps = {
   objectMetadataItem: ObjectMetadataItem;
   recordId: string;
+  widget: PageLayoutWidget;
 };
 
 export const FieldsWidgetCellHoveredPortal = ({
   objectMetadataItem,
   recordId,
+  widget,
 }: FieldsWidgetCellHoveredPortalProps) => {
   const instanceId = useAvailableComponentInstanceIdOrThrow(
     RecordFieldListComponentInstanceContext,
@@ -26,9 +29,10 @@ export const FieldsWidgetCellHoveredPortal = ({
     recordFieldListHoverPositionComponentState,
   );
 
-  const { flattenedFieldMetadataItems } = useFieldsWidgetFlattenedFields(
-    objectMetadataItem.nameSingular,
-  );
+  const { flattenedFieldMetadataItems } = useFieldsWidgetFlattenedFields({
+    objectNameSingular: objectMetadataItem.nameSingular,
+    widget,
+  });
 
   const hoveredFieldMetadataItem = isDefined(hoverPosition)
     ? flattenedFieldMetadataItems.at(hoverPosition)

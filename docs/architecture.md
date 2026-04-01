@@ -39,7 +39,9 @@
 
 - 在当前导入分支中，`Company` / `Person` 的标准对象源码入口不完整，因此第一批 CRM 字段不直接修改缺失的标准对象源码。
 - 第一批 CRM 字段通过 Twenty 现有的 `field-metadata` custom field 流落地到 `Company` / `Person`。
-- 详情页 `Home` tab 与列表字段配置均基于对象元数据驱动，因此新增字段可自然进入详情页字段区和列表可选列。
+- 列表默认可见列不直接来自对象字段元数据，而是来自 `CoreView(key=INDEX).viewFields`；因此默认列落地采用“先建字段，再 create/update INDEX viewField”的两段式。
+- 默认详情页 `Home` 分组优先复用 Twenty 现有 `Fields` widget 配置，不另造对象详情页；当前通过默认 page layout 常量提供 Company/Person 分组配置，再在前端把字段名解析为真实 metadata id。
+- 在默认布局尚未持久化到 page layout metadata 之前，`Company` / `Person` 的首版详情页分组以默认前端 layout 常量为事实来源。
 
 ## 核心领域对象
 

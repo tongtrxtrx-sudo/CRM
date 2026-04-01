@@ -1,10 +1,19 @@
+import { type PageLayoutWidget } from '@/page-layout/types/PageLayoutWidget';
 import { useFieldsWidgetSectionsWithFields } from '@/page-layout/widgets/fields/hooks/useFieldsWidgetSectionsWithFields';
 
 export const useFieldsWidgetSectionsWithIndices = (
-  objectNameSingular: string,
+  {
+    objectNameSingular,
+    widget,
+  }: {
+    objectNameSingular: string;
+    widget: PageLayoutWidget;
+  },
 ) => {
-  const { sectionsWithFields } =
-    useFieldsWidgetSectionsWithFields(objectNameSingular);
+  const { sectionsWithFields } = useFieldsWidgetSectionsWithFields({
+    objectNameSingular,
+    widget,
+  });
 
   const sectionsWithFieldIndices = sectionsWithFields.map(
     (section, sectionIndex) => {

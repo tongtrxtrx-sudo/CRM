@@ -90,7 +90,10 @@ export const FieldsWidget = ({ widget }: FieldsWidgetProps) => {
   );
 
   const { sectionsWithFieldIndices } = useFieldsWidgetSectionsWithIndices(
-    targetRecord.targetObjectNameSingular,
+    {
+      objectNameSingular: targetRecord.targetObjectNameSingular,
+      widget,
+    },
   );
 
   const hasFieldsToDisplay = sectionsWithFieldIndices.length > 0;
@@ -228,10 +231,12 @@ export const FieldsWidget = ({ widget }: FieldsWidgetProps) => {
           <FieldsWidgetCellHoveredPortal
             objectMetadataItem={objectMetadataItem}
             recordId={targetRecord.id}
+            widget={widget}
           />
           <FieldsWidgetCellEditModePortal
             objectMetadataItem={objectMetadataItem}
             recordId={targetRecord.id}
+            widget={widget}
           />
         </RecordFieldListComponentInstanceContext.Provider>
       </StyledContainer>

@@ -37,6 +37,8 @@ node .yarn/releases/yarn-4.9.2.cjs run preview:front
 ```bash
 node .yarn/releases/yarn-4.9.2.cjs run crm:fields:plan
 node .yarn/releases/yarn-4.9.2.cjs run crm:fields:apply
+node .yarn/releases/yarn-4.9.2.cjs run crm:views:plan
+node .yarn/releases/yarn-4.9.2.cjs run crm:views:apply
 ```
 
 ### 测试
@@ -75,3 +77,5 @@ node .yarn/releases/yarn-4.9.2.cjs nx run twenty-front:build
   - 再从仓库根目录运行 `preview:front`
   - 该入口支持 SPA history fallback，可直接访问 `/welcome`
 - 当前第一批 `Company` / `Person` CRM 字段通过 Twenty 的 object metadata custom field 流落地
+- `Company` / `Person` 的默认详情页 `Home` 分组已改为吃默认 `Fields` widget 配置，而不是继续把所有 custom fields 统一塞进 `Other`
+- `Company` / `Person` 的默认列表列通过 `INDEX` view 的 `viewFields` 脚本化落地，`crm:views:*` 负责 plan/apply
