@@ -9,7 +9,7 @@ const __dirname = path.dirname(__filename);
 const buildDir = path.resolve(__dirname, '..', 'build');
 const indexPath = path.join(buildDir, 'index.html');
 
-const host = process.env.HOST ?? '127.0.0.1';
+const host = process.env.HOST ?? 'localhost';
 const port = Number(process.env.PORT ?? process.env.PREVIEW_PORT ?? 3001);
 
 const contentTypes = new Map([
