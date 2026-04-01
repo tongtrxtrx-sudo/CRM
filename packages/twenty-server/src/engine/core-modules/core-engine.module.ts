@@ -14,6 +14,7 @@ import { AuthModule } from 'src/engine/core-modules/auth/auth.module';
 import { BillingWebhookModule } from 'src/engine/core-modules/billing-webhook/billing-webhook.module';
 import { BillingModule } from 'src/engine/core-modules/billing/billing.module';
 import { CacheStorageModule } from 'src/engine/core-modules/cache-storage/cache-storage.module';
+import { CompanyPublicPoolModule } from 'src/engine/core-modules/company-public-pool/company-public-pool.module';
 import { TimelineCalendarEventModule } from 'src/engine/core-modules/calendar/timeline-calendar-event.module';
 import { CaptchaModule } from 'src/engine/core-modules/captcha/captcha.module';
 import { captchaModuleFactory } from 'src/engine/core-modules/captcha/captcha.module-factory';
@@ -82,6 +83,7 @@ import { FileModule } from './file/file.module';
     BillingModule,
     BillingWebhookModule,
     ClientConfigModule,
+    CompanyPublicPoolModule,
     FeatureFlagModule,
     FileModule,
     RowLevelPermissionModule,

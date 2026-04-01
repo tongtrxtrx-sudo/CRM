@@ -83,6 +83,9 @@
 - 当前首个规则内核放在 `twenty-shared` 共享层，而不是前端页面层：
   - `computeCrmCompanyPoolState` 负责根据时间字段与规则配置计算 `PUBLIC_POOL` 迁移、预计退公海时间和提前提醒。
   - `getCrmPersonProtectionState` 负责根据 `company` 关联和 `crmOwnershipStatus` 判断联系人是否受保护。
+- 当前首个服务端适配层放在 `twenty-server` 的 `engine/core-modules/company-public-pool/`：
+  - `CompanyPublicPoolService` 负责将共享规则输出收敛成最小 Company patch。
+  - 当前先不直接绑定 cron、job 或写入 hook，先确保服务层可独立复用和测试。
 
 ## 核心流程
 

@@ -152,6 +152,7 @@
   - 本仓库要参考询盘云实现自动退回、认领、提醒、排除规则
   - 这不是 Twenty 标准 CRM 的默认心智模型
   - 当前第一步已先落共享规则内核：`computeCrmCompanyPoolState`
+  - 当前第二步已落服务端适配层：`CompanyPublicPoolService`
 
 ### 2. 未建档联系人策略
 

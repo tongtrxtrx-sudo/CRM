@@ -100,6 +100,13 @@
 - 共享实现位置：
   - `packages/twenty-shared/src/utils/crm/computeCrmCompanyPoolState.ts`
   - `packages/twenty-shared/src/utils/crm/getCrmPersonProtectionState.ts`
+- server adapter 位置：
+  - `packages/twenty-server/src/engine/core-modules/company-public-pool/services/company-public-pool.service.ts`
+  - `packages/twenty-server/src/engine/core-modules/company-public-pool/utils/build-company-public-pool-patch.util.ts`
+- 当前 server adapter 目的：
+  - 先把 Company 公海规则转换成最小 patch
+  - 只回写 `crmOwnershipStatus` 与 `crmExpectedPoolReturnAt`
+  - 暂不直接绑定 job、cron 或对象级 hook
 
 ## 需求
 
