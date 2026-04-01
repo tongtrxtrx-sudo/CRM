@@ -1,21 +1,52 @@
-# OS and editors
+**/**/.env
 .DS_Store
-Thumbs.db
-.idea/
-.vscode/
+/.idea
+**/**/node_modules/
+.cache
 
-# Logs and coverage
-*.log
-coverage/
-.coverage
+# yarn is the recommended package manager across the project
+**/**/.package-lock.json
 
-# Local environment
-.env
-.env.*
-!.env.example
+.nx/installation
+.nx/cache
+.nx/workspace-data
 
-# Archives and temp files
-*.tmp
-*.temp
-tmp/
-.tmp/
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+.vercel
+.swc
+
+**/**/logs/**
+
+coverage
+dist
+storybook-static
+*.tsbuildinfo
+.eslintcache
+.nyc_output
+test-results/
+dump.rdb
+.tinyb
+
+.notes
+/data/
+/.devenv/
+/.direnv/
+/.pre-commit-config.yaml
+/.envrc
+/devenv.nix
+/flake.lock
+/flake.nix
+
+.crowdin.yml
+.react-email/
+
+mcp.json
+/.junie/
+TRANSLATION_QA_REPORT.md
+/.tmp/
