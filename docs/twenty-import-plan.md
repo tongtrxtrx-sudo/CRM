@@ -198,6 +198,7 @@
   - 已新增本地最小 mock backend，用于前端 smoke test：
     - `node packages/twenty-front/scripts/mock-preview-backend.mjs`
     - 或使用 `packages/twenty-front/package.json` 中的 `start:mock-backend`
+    - 当前已覆盖欢迎页邮箱继续所需的最小 GraphQL 操作，包括 `GetPublicWorkspaceDataByDomain`、`TrackAnalytics`、`IntrospectionQuery`、`CheckUserExists`
   - 已新增本地静态预览入口，支持 SPA history fallback：
     - `node .yarn/releases/yarn-4.9.2.cjs run preview:front`
     - 或直接运行 `packages/twenty-front/package.json` 中的 `preview:static`
@@ -205,6 +206,9 @@
   - `GET /client-config` 与 `POST /metadata` 在 mock backend 下均已返回 `200`
   - 通过 `preview:front` 入口访问 `/welcome` 时，深链接 fallback 已生效
   - `packages/twenty-front/project.json` 的 `serve` 目标与 `packages/twenty-front/package.json` 的 `start:prod` 均已改为本地静态预览脚本，不再依赖临时安装 `serve`
+  - 欢迎页交互已进一步验证：
+    - 点击“继续使用电子邮件”后可进入邮箱输入态
+    - 输入邮箱并点击“继续”后，当前可进入密码步骤，出现密码输入框与“登录”按钮
   - 当前前端首屏剩余的是非阻塞控制台警告，例如未编译 i18n 提示和普通 debug 日志
   - 当前下一步应转向更高一级的应用启动验证，例如与更完整的 mock 后端或真实本地后端联调
 

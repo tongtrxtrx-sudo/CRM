@@ -79,6 +79,13 @@ const publicWorkspaceDataByDomain = {
   },
 };
 
+const checkUserExists = {
+  __typename: 'CheckUserExistOutput',
+  exists: true,
+  availableWorkspacesCount: 1,
+  isEmailVerified: true,
+};
+
 const getCorsHeaders = (request) => {
   const requestedHeaders =
     typeof request.headers['access-control-request-headers'] === 'string'
@@ -156,6 +163,15 @@ const server = http.createServer(async (request, response) => {
           trackAnalytics: {
             success: 1,
           },
+        },
+      });
+      return;
+    }
+
+    if (operationName === 'CheckUserExists') {
+      json(request, response, 200, {
+        data: {
+          checkUserExists,
         },
       });
       return;
