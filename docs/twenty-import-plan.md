@@ -170,13 +170,17 @@
   - 上游代码结构完整导入
   - `packages/twenty-front`、`packages/twenty-server` 等关键工作区存在
   - 本机 `node -v` 为 `v24.13.1`，满足上游 `^24.5.0` 要求
-  - 上游要求的包管理器是 `yarn@4.9.2`
+  - 已可通过本地 `.yarn/releases/yarn-4.9.2.cjs` 使用 `yarn@4.9.2`
+  - `yarn install` 已可在项目内缓存模式下完成
+  - `nx show project twenty-front` 和 `nx show project twenty-ui` 均已可运行
 - 当前阻塞：
-  - 本机没有现成 `yarn`
-  - `corepack yarn -v` 在下载 `yarn@4.9.2` 时超时，尚未建立可执行的 Yarn 环境
+  - 第一次上游导入不完整，曾缺失 `twenty-shared`、`twenty-ui` 等工作区及根配置文件
+  - 经过本地修复后，依赖和项目图已恢复，但 `generateBarrels` 前置脚本运行极慢
+  - 当前 `twenty-ui:build` 未能在合理时间内进入 `dist` 产物输出阶段
 - 当前结论：
-  - 不能声称“已完成启动验证”
-  - 目前只完成了“代码导入完整性验证”和“运行前环境约束识别”
+  - 不能声称“已完成最小构建验证”
+  - 当前已完成“依赖安装验证”和“Nx 项目图验证”
+  - 下一步应聚焦 `generateBarrels` 的性能/执行路径，而不是继续盲等整体 build
 
 ### 阶段 8 - 第二轮本地扩展
 
