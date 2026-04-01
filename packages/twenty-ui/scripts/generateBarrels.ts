@@ -603,4 +603,18 @@ const main = () => {
     `modules=${moduleDirectories.length};indexFiles=${moduleIndexFiles.length}`,
   );
 };
-main();
+
+try {
+  main();
+
+  if (DEBUG_BARRELS) {
+    logActiveHandles('before-forced-exit');
+  }
+
+  if (process.platform === 'win32') {
+    process.exit(0);
+  }
+} catch (error) {
+  console.error(error);
+  process.exit(1);
+}

@@ -520,4 +520,14 @@ const main = () => {
     });
   }
 };
-main();
+
+try {
+  main();
+
+  if (process.platform === 'win32') {
+    process.exit(0);
+  }
+} catch (error) {
+  console.error(error);
+  process.exit(1);
+}

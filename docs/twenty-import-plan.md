@@ -175,15 +175,21 @@
   - `nx show project twenty-front` 和 `nx show project twenty-ui` 均已可运行
 - 当前阻塞：
   - 第一次上游导入不完整，曾缺失 `twenty-shared`、`twenty-ui` 等工作区及根配置文件
-  - 经过本地修复后，依赖和项目图已恢复，但 `twenty-ui:build` 仍未能在合理时间内进入 `dist` 产物输出阶段
+  - 经过本地修复后，依赖和项目图已恢复，且 `generateBarrels` 路径已在 Windows 下打通
   - 已通过环境日志确认：
     - 直接执行 `yarn tsx packages/twenty-ui/scripts/generateBarrels.ts` 与 `yarn tsx packages/twenty-shared/scripts/generateBarrels.ts` 时，两者总耗时都约 `200ms`
-    - `glob`、导出扫描、`prettier` 格式化与 `fs.writeFileSync` 均为毫秒级，不是当前瓶颈
-    - 当前更可能的阻塞点是 Windows 环境下 `nx:run-commands` 调起 `tsx` 后未正常收尾，而不是 `generateBarrels.ts` 自身性能
+    - `glob`、导出扫描、`prettier` 格式化与 `fs.writeFileSync` 均为毫秒级，不是性能瓶颈
+    - Windows 下 `nx:run-commands` 调起 `tsx` 时存在收尾异常，已通过在 `generateBarrels.ts` 末尾显式退出进程绕过
+  - 当前新的构建阻塞为上游导入残留的空文件：
+    - `packages/twenty-shared/src/database-events/object-record-restore.event.ts`
+    - `packages/twenty-ui/src/layout/animated-expandable-container/types/AnimationDurations.ts`
+    - 另外还扫描到其他 0 字节 TS/TSX 文件，说明当前首要问题已从执行路径转为上游文件完整性
 - 当前结论：
   - 不能声称“已完成最小构建验证”
   - 当前已完成“依赖安装验证”和“Nx 项目图验证”
-  - 下一步应聚焦 `nx:run-commands` 与 `tsx` 的退出路径，而不是继续优化 `generateBarrels.ts` 内部逻辑
+  - 当前已完成 `twenty-ui:generateBarrels` 与 `twenty-shared:generateBarrels` 的 Windows 收口验证
+  - `twenty-ui:build` 已能越过 `generateBarrels` 阶段并继续执行
+  - 下一步应优先修复导入时遗留的 0 字节源码文件，再继续完整构建验证
 
 ### 阶段 8 - 第二轮本地扩展
 
