@@ -23,6 +23,10 @@ const ORDERED_LAST_STANDARD_OBJECTS: string[] = [
   CoreObjectNameSingular.Dashboard,
 ];
 
+const HIDDEN_STANDARD_OBJECTS_ON_FIRST_TRIM: string[] = [
+  CoreObjectNameSingular.Dashboard,
+];
+
 type NavigationDrawerSectionForObjectMetadataItemsProps = {
   sectionTitle: string;
   isRemote: boolean;
@@ -85,7 +89,10 @@ export const NavigationDrawerSectionForObjectMetadataItems = ({
     ...sortedStandardObjectMetadataItems,
     ...sortedCustomObjectMetadataItems,
     ...sortedLastStandardObjectMetadataItems,
-  ];
+  ].filter(
+    (item) =>
+      !HIDDEN_STANDARD_OBJECTS_ON_FIRST_TRIM.includes(item.nameSingular),
+  );
 
   const objectMetadataItemsForNavigationItemsWithReadPermission =
     objectMetadataItemsForNavigationItems.filter(

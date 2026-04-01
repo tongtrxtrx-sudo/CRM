@@ -3,12 +3,10 @@ import { SettingsPath } from 'twenty-shared/types';
 import { useAuth } from '@/auth/hooks/useAuth';
 import { currentUserState } from '@/auth/states/currentUserState';
 import { currentWorkspaceMemberState } from '@/auth/states/currentWorkspaceMemberState';
-import { billingState } from '@/client-config/states/billingState';
 import { supportChatState } from '@/client-config/states/supportChatState';
 import { usePermissionFlagMap } from '@/settings/roles/hooks/usePermissionFlagMap';
 import { getDocumentationUrl } from '@/support/utils/getDocumentationUrl';
 import { type NavigationDrawerItemIndentationLevel } from '@/ui/navigation/navigation-drawer/components/NavigationDrawerItem';
-import { useIsFeatureEnabled } from '@/workspace/hooks/useIsFeatureEnabled';
 import { t } from '@lingui/core/macro';
 import { isNonEmptyString } from '@sniptt/guards';
 import { useRecoilValue } from 'recoil';
@@ -36,7 +34,7 @@ import {
   IconUsers,
   IconWorld,
 } from 'twenty-ui/display';
-import { FeatureFlagKey, PermissionFlagType } from '~/generated/graphql';
+import { PermissionFlagType } from '~/generated/graphql';
 
 export type SettingsNavigationSection = {
   label: string;
@@ -59,20 +57,14 @@ export type SettingsNavigationItem = {
 };
 
 const useSettingsNavigationItems = (): SettingsNavigationSection[] => {
-  const billing = useRecoilValue(billingState);
   const { signOut } = useAuth();
   const supportChat = useRecoilValue(supportChatState);
   const currentWorkspaceMember = useRecoilValue(currentWorkspaceMemberState);
 
-  const isBillingEnabled = billing?.isBillingEnabled ?? false;
   const currentUser = useRecoilValue(currentUserState);
   const isAdminEnabled =
     (currentUser?.canImpersonate || currentUser?.canAccessFullAdminPanel) ??
     false;
-  const isAIEnabled = useIsFeatureEnabled(FeatureFlagKey.IS_AI_ENABLED);
-  const isApplicationEnabled = useIsFeatureEnabled(
-    FeatureFlagKey.IS_APPLICATION_ENABLED,
-  );
   const isSupportChatConfigured =
     supportChat?.supportDriver === 'FRONT' &&
     isNonEmptyString(supportChat.supportFrontChatId);
@@ -108,6 +100,7 @@ const useSettingsNavigationItems = (): SettingsNavigationSection[] => {
               path: SettingsPath.AccountsCalendars,
               Icon: IconCalendarEvent,
               indentationLevel: 2,
+              isHidden: true,
             },
           ],
         },
@@ -150,8 +143,7 @@ const useSettingsNavigationItems = (): SettingsNavigationSection[] => {
           label: t`Billing`,
           path: SettingsPath.Billing,
           Icon: IconCurrencyDollar,
-          isHidden:
-            !isBillingEnabled || !permissionMap[PermissionFlagType.WORKSPACE],
+          isHidden: true,
         },
         {
           label: t`APIs & Webhooks`,
@@ -170,17 +162,14 @@ const useSettingsNavigationItems = (): SettingsNavigationSection[] => {
           label: t`Applications`,
           path: SettingsPath.Applications,
           Icon: IconPlug,
-          isHidden:
-            !isApplicationEnabled ||
-            !permissionMap[PermissionFlagType.WORKSPACE],
+          isHidden: true,
           isNew: true,
         },
         {
           label: t`AI`,
           path: SettingsPath.AI,
           Icon: IconSparkles,
-          isHidden:
-            !isAIEnabled || !permissionMap[PermissionFlagType.WORKSPACE],
+          isHidden: true,
           isNew: true,
         },
         {
@@ -205,7 +194,7 @@ const useSettingsNavigationItems = (): SettingsNavigationSection[] => {
           label: t`Updates`,
           path: SettingsPath.Updates,
           Icon: IconRocket,
-          isHidden: !permissionMap[PermissionFlagType.WORKSPACE],
+          isHidden: true,
         },
         {
           label: t`Support`,
