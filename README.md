@@ -82,6 +82,7 @@ node .yarn/releases/yarn-4.9.2.cjs nx run twenty-front:build
 - 已新增第一批共享 CRM 规则内核，位置在 `packages/twenty-shared/src/utils/crm/`
   - `computeCrmCompanyPoolState` 负责退公海与提醒判定
   - `getCrmPersonProtectionState` 负责未建档联系人和公海客户联系人保护判定
-- 已新增第一批 server adapter 层，位置在 `packages/twenty-server/src/engine/core-modules/company-public-pool/`
+- 已新增第一批 server adapter 层，位置在 `packages/twenty-server/src/engine/core-modules/company-public-pool/` 与 `packages/twenty-server/src/engine/core-modules/person-protection/`
   - `CompanyPublicPoolService` 负责把共享规则结果转成最小 Company patch
   - `buildCompanyPublicPoolPatch` 负责只回写 `crmOwnershipStatus` 和 `crmExpectedPoolReturnAt`
+  - `PersonProtectionService` 负责把联系人保护规则转换成服务端可消费的保护状态、是否可绕过归属保护，以及公司归属上下文是否已完整解析

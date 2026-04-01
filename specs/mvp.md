@@ -103,10 +103,13 @@
 - server adapter 位置：
   - `packages/twenty-server/src/engine/core-modules/company-public-pool/services/company-public-pool.service.ts`
   - `packages/twenty-server/src/engine/core-modules/company-public-pool/utils/build-company-public-pool-patch.util.ts`
+  - `packages/twenty-server/src/engine/core-modules/person-protection/services/person-protection.service.ts`
+  - `packages/twenty-server/src/engine/core-modules/person-protection/person-protection.module.ts`
 - 当前 server adapter 目的：
   - 先把 Company 公海规则转换成最小 patch
   - 只回写 `crmOwnershipStatus` 与 `crmExpectedPoolReturnAt`
-  - 暂不直接绑定 job、cron 或对象级 hook
+  - 先把 Person 保护规则转换成服务端可消费的保护状态与归属上下文完整性信号
+  - 暂不直接绑定 job、cron、对象级 hook 或权限流水线
 
 ## 需求
 

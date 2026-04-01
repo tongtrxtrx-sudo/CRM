@@ -42,6 +42,7 @@ import { TimelineMessagingModule } from 'src/engine/core-modules/messaging/timel
 import { MetricsModule } from 'src/engine/core-modules/metrics/metrics.module';
 import { MetricsService } from 'src/engine/core-modules/metrics/metrics.service';
 import { OpenApiModule } from 'src/engine/core-modules/open-api/open-api.module';
+import { PersonProtectionModule } from 'src/engine/core-modules/person-protection/person-protection.module';
 import { PostgresCredentialsModule } from 'src/engine/core-modules/postgres-credentials/postgres-credentials.module';
 import { PublicDomainModule } from 'src/engine/core-modules/public-domain/public-domain.module';
 import { RedisClientModule } from 'src/engine/core-modules/redis-client/redis-client.module';
@@ -88,6 +89,7 @@ import { FileModule } from './file/file.module';
     FileModule,
     RowLevelPermissionModule,
     OpenApiModule,
+    PersonProtectionModule,
     ApplicationModule,
     ApplicationSyncModule,
     AppTokenModule,

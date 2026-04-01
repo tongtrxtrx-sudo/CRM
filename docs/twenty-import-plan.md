@@ -222,9 +222,12 @@
   - 已新增首个 `twenty-server` 适配层：
     - `packages/twenty-server/src/engine/core-modules/company-public-pool/services/company-public-pool.service.ts`
     - `packages/twenty-server/src/engine/core-modules/company-public-pool/utils/build-company-public-pool-patch.util.ts`
+  - 已新增第二个 `twenty-server` 适配层：
+    - `packages/twenty-server/src/engine/core-modules/person-protection/services/person-protection.service.ts`
+    - `packages/twenty-server/src/engine/core-modules/person-protection/person-protection.module.ts`
   - 当前服务端验证方式：
-    - `node .yarn/releases/yarn-4.9.2.cjs nx run twenty-server:jest -- --runInBand --runTestsByPath src/engine/core-modules/company-public-pool/utils/__tests__/build-company-public-pool-patch.util.spec.ts src/engine/core-modules/company-public-pool/services/__tests__/company-public-pool.service.spec.ts`
-    - 当前 2 个 suite、6 个测试通过
+    - `node .yarn/releases/yarn-4.9.2.cjs nx run twenty-server:jest -- --runInBand --runTestsByPath src/engine/core-modules/company-public-pool/utils/__tests__/build-company-public-pool-patch.util.spec.ts src/engine/core-modules/company-public-pool/services/__tests__/company-public-pool.service.spec.ts src/engine/core-modules/person-protection/services/__tests__/person-protection.service.spec.ts`
+    - 当前 3 个 suite、11 个测试通过
   - `twenty-server:build` 当前仍受仓库现有 target 配置问题阻塞，错误为缺少 `packages/twenty-server/tsconfig.build.json`；这不是本轮 CRM 规则代码直接引入的新错误
   - 已新增本地静态预览入口，支持 SPA history fallback：
     - `node .yarn/releases/yarn-4.9.2.cjs run preview:front`

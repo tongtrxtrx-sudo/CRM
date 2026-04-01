@@ -36,7 +36,7 @@
 - 若上游已存在等价能力，优先用配置、扩展点或薄层适配解决，而不是重写。
 - 当前第一批 CRM 对象差异采用 `Company` / `Person` 的 custom field metadata 流落地，而不是在当前导入分支中直接改缺失的标准对象源码。
 - 当前第一批业务规则也先放入共享层 `twenty-shared/src/utils/crm/`，避免把公海到期和联系人保护绑定到 `twenty-front` 页面状态。
-- 在共享规则之上，服务端仅增加薄适配层，不直接扩写一整套 CRM 子系统；当前最小适配点是 `CompanyPublicPoolService`。
+- 在共享规则之上，服务端仅增加薄适配层，不直接扩写一整套 CRM 子系统；当前最小适配点包括 `CompanyPublicPoolService` 与 `PersonProtectionService`。
 
 ## 待确认事项
 

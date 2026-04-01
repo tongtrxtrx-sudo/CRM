@@ -161,6 +161,7 @@
   - 本仓库要求“未建档联系人不受归属保护”
   - 这需要在对象状态、归属规则和流程入口上做专门设计
   - 当前第一步已先落共享规则内核：`getCrmPersonProtectionState`
+  - 当前第二步已落服务端适配层：`PersonProtectionService`
 
 ### 3. 渠道接入模块
 
