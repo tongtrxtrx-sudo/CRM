@@ -175,12 +175,15 @@
   - `nx show project twenty-front` 和 `nx show project twenty-ui` 均已可运行
 - 当前阻塞：
   - 第一次上游导入不完整，曾缺失 `twenty-shared`、`twenty-ui` 等工作区及根配置文件
-  - 经过本地修复后，依赖和项目图已恢复，但 `generateBarrels` 前置脚本运行极慢
-  - 当前 `twenty-ui:build` 未能在合理时间内进入 `dist` 产物输出阶段
+  - 经过本地修复后，依赖和项目图已恢复，但 `twenty-ui:build` 仍未能在合理时间内进入 `dist` 产物输出阶段
+  - 已通过环境日志确认：
+    - 直接执行 `yarn tsx packages/twenty-ui/scripts/generateBarrels.ts` 与 `yarn tsx packages/twenty-shared/scripts/generateBarrels.ts` 时，两者总耗时都约 `200ms`
+    - `glob`、导出扫描、`prettier` 格式化与 `fs.writeFileSync` 均为毫秒级，不是当前瓶颈
+    - 当前更可能的阻塞点是 Windows 环境下 `nx:run-commands` 调起 `tsx` 后未正常收尾，而不是 `generateBarrels.ts` 自身性能
 - 当前结论：
   - 不能声称“已完成最小构建验证”
   - 当前已完成“依赖安装验证”和“Nx 项目图验证”
-  - 下一步应聚焦 `generateBarrels` 的性能/执行路径，而不是继续盲等整体 build
+  - 下一步应聚焦 `nx:run-commands` 与 `tsx` 的退出路径，而不是继续优化 `generateBarrels.ts` 内部逻辑
 
 ### 阶段 8 - 第二轮本地扩展
 

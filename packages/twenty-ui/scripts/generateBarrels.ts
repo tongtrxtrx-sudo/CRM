@@ -8,6 +8,58 @@ import ts from 'typescript';
 
 // TODO prastoin refactor this file in several one into its dedicated package and make it a TypeScript CLI
 
+const DEBUG_BARRELS = process.env.TWENTY_DEBUG_BARRELS === '1';
+const getNowInMs = () => Number(process.hrtime.bigint()) / 1_000_000;
+const logTiming = (label: string, startedAt: number, details?: string) => {
+  if (!DEBUG_BARRELS) {
+    return;
+  }
+
+  const suffix = details ? ` | ${details}` : '';
+  console.log(
+    `[barrels][twenty-ui] ${label}: ${(getNowInMs() - startedAt).toFixed(1)}ms${suffix}`,
+  );
+};
+const logActiveHandles = (label: string) => {
+  if (!DEBUG_BARRELS) {
+    return;
+  }
+
+  const handles = ((process as typeof process & {
+    _getActiveHandles?: () => unknown[];
+  })._getActiveHandles?.() ?? []) as Array<{ constructor?: { name?: string } }>;
+  const requests = ((process as typeof process & {
+    _getActiveRequests?: () => unknown[];
+  })._getActiveRequests?.() ?? []) as Array<{ constructor?: { name?: string } }>;
+  const handleSummary = handles.reduce<Record<string, number>>((acc, handle) => {
+    const key = handle.constructor?.name ?? 'UnknownHandle';
+    acc[key] = (acc[key] ?? 0) + 1;
+    return acc;
+  }, {});
+  const requestSummary = requests.reduce<Record<string, number>>(
+    (acc, request) => {
+      const key = request.constructor?.name ?? 'UnknownRequest';
+      acc[key] = (acc[key] ?? 0) + 1;
+      return acc;
+    },
+    {},
+  );
+
+  console.log(
+    `[barrels][twenty-ui] ${label}: handles=${JSON.stringify(handleSummary)} requests=${JSON.stringify(requestSummary)}`,
+  );
+};
+
+if (DEBUG_BARRELS) {
+  process.on('beforeExit', (code) => {
+    logActiveHandles(`beforeExit(code=${code})`);
+  });
+
+  process.on('exit', (code) => {
+    logActiveHandles(`exit(code=${code})`);
+  });
+}
+
 const INDEX_FILENAME = 'index';
 const PACKAGE_JSON_FILENAME = 'package.json';
 const NX_PROJECT_CONFIGURATION_FILENAME = 'project.json';
@@ -19,11 +71,15 @@ const NX_PROJECT_CONFIGURATION_PATH = path.join(
   NX_PROJECT_CONFIGURATION_FILENAME,
 );
 
+const prettierConfigFileStartedAt = getNowInMs();
 const prettierConfigFile = prettier.resolveConfigFile();
+logTiming('prettier.resolveConfigFile', prettierConfigFileStartedAt);
 if (prettierConfigFile == null) {
   throw new Error('Prettier config file not found');
 }
+const prettierResolveConfigStartedAt = getNowInMs();
 const prettierConfiguration = prettier.resolveConfig(prettierConfigFile);
+logTiming('prettier.resolveConfig', prettierResolveConfigStartedAt);
 const prettierFormat = (str: string, parser: Options['parser']) =>
   prettier.format(str, {
     ...prettierConfiguration,
@@ -49,27 +105,43 @@ const createTypeScriptFile = ({
  *                              |___/
  */
 `;
+  const prettierStartedAt = getNowInMs();
   const formattedContent = prettierFormat(
     `${header}\n${content}\n`,
     'typescript',
   );
+  logTiming(
+    `prettier.format:${path.basename(filePath)}/${filename}`,
+    prettierStartedAt,
+    `chars=${formattedContent.length}`,
+  );
+
+  const writeStartedAt = getNowInMs();
   fs.writeFileSync(
     path.join(filePath, `${filename}.ts`),
     formattedContent,
     'utf-8',
+  );
+  logTiming(
+    `fs.writeFileSync:${path.basename(filePath)}/${filename}`,
+    writeStartedAt,
   );
 };
 
 const getLastPathFolder = (pathStr: string) => path.basename(pathStr);
 
 const getSubDirectoryPaths = (directoryPath: string): string[] => {
+  const startedAt = getNowInMs();
   const pattern = slash(path.join(directoryPath, '*/'));
-  return globSync(pattern, {
+  const directories = globSync(pattern, {
     ignore: [...EXCLUDED_DIRECTORIES],
     cwd: SRC_PATH,
     nodir: false,
     maxDepth: 1,
   }).sort((a, b) => a.localeCompare(b));
+  logTiming('globSync:moduleDirectories', startedAt, `count=${directories.length}`);
+
+  return directories;
 };
 
 const partitionFileExportsByType = (declarations: DeclarationOccurrence[]) => {
@@ -151,8 +223,13 @@ type WriteInJsonFileArgs = {
 };
 const updateJsonFile = ({ content, file }: WriteInJsonFileArgs) => {
   const updatedJsonFile = JSON.stringify(content);
+  const prettierStartedAt = getNowInMs();
   const formattedContent = prettierFormat(updatedJsonFile, 'json-stringify');
+  logTiming(`prettier.format:${path.basename(file)}`, prettierStartedAt);
+
+  const writeStartedAt = getNowInMs();
   fs.writeFileSync(file, formattedContent, 'utf-8');
+  logTiming(`fs.writeFileSync:${path.basename(file)}`, writeStartedAt);
 };
 
 const writeInPackageJson = (update: JsonUpdate) => {
@@ -277,6 +354,7 @@ function getTypeScriptFiles(
   directoryPath: string,
   includeIndex: boolean = false,
 ): string[] {
+  const startedAt = getNowInMs();
   const pattern = slash(path.join(directoryPath, '**', '*.{ts,tsx}'));
   const files = globSync(pattern, {
     cwd: SRC_PATH,
@@ -284,11 +362,18 @@ function getTypeScriptFiles(
     ignore: [...EXCLUDED_EXTENSIONS, ...EXCLUDED_DIRECTORIES],
   });
 
-  return files.filter(
+  const filteredFiles = files.filter(
     (file) =>
       !file.endsWith('.d.ts') &&
       (includeIndex ? true : !file.endsWith('index.ts')),
   );
+  logTiming(
+    `globSync:files:${path.basename(directoryPath)}`,
+    startedAt,
+    `count=${filteredFiles.length}`,
+  );
+
+  return filteredFiles;
 }
 
 const getKind = (
@@ -433,6 +518,7 @@ type FileExports = Array<{
 }>;
 
 function findAllExports(directoryPath: string): FileExports {
+  const startedAt = getNowInMs();
   const results: FileExports = [];
 
   const files = getTypeScriptFiles(directoryPath);
@@ -454,6 +540,12 @@ function findAllExports(directoryPath: string): FileExports {
     }
   }
 
+  logTiming(
+    `findAllExports:${path.basename(directoryPath)}`,
+    startedAt,
+    `files=${files.length};exportedFiles=${results.length}`,
+  );
+
   return results;
 }
 
@@ -466,6 +558,7 @@ type ExportByBarrel = {
 };
 const retrieveExportsByBarrel = (barrelDirectories: string[]) => {
   return barrelDirectories.map<ExportByBarrel>((moduleDirectory) => {
+    const startedAt = getNowInMs();
     const moduleExportsPerFile = findAllExports(moduleDirectory);
     const moduleName = getLastPathFolder(moduleDirectory);
     if (!moduleName) {
@@ -473,6 +566,12 @@ const retrieveExportsByBarrel = (barrelDirectories: string[]) => {
         `Should never occur moduleName not found ${moduleDirectory}`,
       );
     }
+
+    logTiming(
+      `retrieveExportsByBarrel:${moduleName}`,
+      startedAt,
+      `exportedFiles=${moduleExportsPerFile.length}`,
+    );
 
     return {
       barrel: {
@@ -485,6 +584,7 @@ const retrieveExportsByBarrel = (barrelDirectories: string[]) => {
 };
 
 const main = () => {
+  const startedAt = getNowInMs();
   const moduleDirectories = getSubDirectoryPaths(SRC_PATH);
   const exportsByBarrel = retrieveExportsByBarrel(moduleDirectories);
   const moduleIndexFiles = generateModuleIndexFiles(exportsByBarrel);
@@ -496,5 +596,11 @@ const main = () => {
   updateNxProjectConfigurationBuildOutputs(nxBuildOutputsPath);
   writeInPackageJson(packageJsonConfig);
   moduleIndexFiles.forEach(createTypeScriptFile);
+  logActiveHandles('after-main-work');
+  logTiming(
+    'main',
+    startedAt,
+    `modules=${moduleDirectories.length};indexFiles=${moduleIndexFiles.length}`,
+  );
 };
 main();
