@@ -5,6 +5,7 @@
   "scripts": {
     "build": "NODE_ENV=production VITE_DISABLE_TYPESCRIPT_CHECKER=true NODE_OPTIONS=--max-old-space-size=8192 npx vite build && node ./scripts/inject-runtime-env.mjs",
     "build:sourcemaps": "NODE_ENV=production VITE_BUILD_SOURCEMAP=true VITE_DISABLE_TYPESCRIPT_CHECKER=true NODE_OPTIONS=--max-old-space-size=8192 npx vite build && node ./scripts/inject-runtime-env.mjs",
+    "start:mock-backend": "node ./scripts/mock-preview-backend.mjs",
     "start:prod": "NODE_ENV=production npx serve -s build",
     "tsup": "npx tsup"
   },

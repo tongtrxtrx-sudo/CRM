@@ -195,7 +195,15 @@
   - `twenty-front:build` 已通过
   - 前端构建在 Windows 下已完成 runtime env 注入，`build/index.html` 中的 `window._env_` 已被成功写入
   - 当前剩余的是非阻塞构建告警，例如大 chunk 告警、`Browserslist` 数据较旧告警，以及部分第三方模块的 Vite/Rollup 告警
-  - 当前下一步应转向 `twenty-front:start/preview` 或更高一级的应用启动验证
+  - 已新增本地最小 mock backend，用于前端 smoke test：
+    - `node packages/twenty-front/scripts/mock-preview-backend.mjs`
+    - 或使用 `packages/twenty-front/package.json` 中的 `start:mock-backend`
+  - 在 mock backend 配合静态预览下，访问根路径 `/` 后前端可正常跳转到 `/welcome`，页面标题为“登录或创建账户”，且不再进入 `Unable to Reach Back-end` 错误页
+  - `GET /client-config` 与 `POST /metadata` 在 mock backend 下均已返回 `200`
+  - 当前已知剩余限制：
+    - 用普通静态服务器直接打开深链接 `/welcome` 会因缺少 SPA history fallback 返回 `404`
+    - 当前前端首屏剩余的是非阻塞控制台警告，例如未编译 i18n 提示和普通 debug 日志
+  - 当前下一步应转向更高一级的应用启动验证，优先选择带 history fallback 的预览方式
 
 ### 阶段 8 - 第二轮本地扩展
 
