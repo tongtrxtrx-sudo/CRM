@@ -79,3 +79,6 @@ node .yarn/releases/yarn-4.9.2.cjs nx run twenty-front:build
 - 当前第一批 `Company` / `Person` CRM 字段通过 Twenty 的 object metadata custom field 流落地
 - `Company` / `Person` 的默认详情页 `Home` 分组已改为吃默认 `Fields` widget 配置，而不是继续把所有 custom fields 统一塞进 `Other`
 - `Company` / `Person` 的默认列表列通过 `INDEX` view 的 `viewFields` 脚本化落地，`crm:views:*` 负责 plan/apply
+- 已新增第一批共享 CRM 规则内核，位置在 `packages/twenty-shared/src/utils/crm/`
+  - `computeCrmCompanyPoolState` 负责退公海与提醒判定
+  - `getCrmPersonProtectionState` 负责未建档联系人和公海客户联系人保护判定

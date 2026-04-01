@@ -22,6 +22,20 @@ export { upsertIntoArrayOfObjectsComparingId } from './array/upsertIntoArrayOfOb
 export { upsertPropertiesOfItemIntoArrayOfObjectsComparingId } from './array/upsertPropertiesOfItemIntoArrayOfObjectsComparingId';
 export { assertUnreachable } from './assertUnreachable';
 export { computeDiffBetweenObjects } from './compute-diff-between-objects';
+export type {
+  CrmOwnershipStatus,
+  CrmCompanyPoolRuleTrigger,
+  CrmCompanyPoolRuleConfig,
+  CrmCompanyPoolStateInput,
+  CrmCompanyPoolStateResult,
+} from './crm/computeCrmCompanyPoolState';
+export { computeCrmCompanyPoolState } from './crm/computeCrmCompanyPoolState';
+export type {
+  CrmPersonProtectionReason,
+  CrmPersonProtectionInput,
+  CrmPersonProtectionState,
+} from './crm/getCrmPersonProtectionState';
+export { getCrmPersonProtectionState } from './crm/getCrmPersonProtectionState';
 export { isPlainDateAfter } from './date/isPlainDateAfter';
 export { isPlainDateBefore } from './date/isPlainDateBefore';
 export { isPlainDateBeforeOrEqual } from './date/isPlainDateBeforeOrEqual';

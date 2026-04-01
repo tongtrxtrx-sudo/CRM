@@ -213,6 +213,12 @@
     - 再运行 `crm:views:plan -> crm:views:apply -> crm:views:plan`
     - 最后一轮 `plan` 已对目标字段全部返回 `SKIP (...already aligned)`
   - `twenty-front:build --skip-nx-cache --output-style=stream` 在本轮默认详情页分组和默认列表列改动后已重新通过
+  - 已新增首个共享 CRM 业务规则切片，位置在 `packages/twenty-shared/src/utils/crm/`
+    - `computeCrmCompanyPoolState`：根据 `crmLastAcquiredAt`、`crmLastFollowedUpAt`、`crmLastClosedWonAt` 和规则配置计算退公海、提醒与预计退公海时间
+    - `getCrmPersonProtectionState`：根据 `company` 关联和 `crmOwnershipStatus` 判断联系人是否受保护
+  - 当前规则内核验证方式：
+    - `node .yarn/releases/yarn-4.9.2.cjs nx run twenty-shared:build --skip-nx-cache --output-style=stream`
+    - `node .yarn/releases/yarn-4.9.2.cjs tsx -e \"...\"` 直接调用规则函数并验证提醒和未建档联系人场景
   - 已新增本地静态预览入口，支持 SPA history fallback：
     - `node .yarn/releases/yarn-4.9.2.cjs run preview:front`
     - 或直接运行 `packages/twenty-front/package.json` 中的 `preview:static`

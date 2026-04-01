@@ -80,6 +80,9 @@
 - 跟进行为由配置决定，配置项触发后更新最近跟进时间。
 - 客户最近获得时间、最近跟进时间、最近成交时间均为系统计算字段，不依赖人工直接维护。
 - 公海规则必须支持配置，不得将单一规则写死在实现中。
+- 当前首个规则内核放在 `twenty-shared` 共享层，而不是前端页面层：
+  - `computeCrmCompanyPoolState` 负责根据时间字段与规则配置计算 `PUBLIC_POOL` 迁移、预计退公海时间和提前提醒。
+  - `getCrmPersonProtectionState` 负责根据 `company` 关联和 `crmOwnershipStatus` 判断联系人是否受保护。
 
 ## 核心流程
 

@@ -87,6 +87,20 @@
   - `crmSourceChannel`
   - `crmSourceCapturedAt`
 
+## 第一批规则内核
+
+- `computeCrmCompanyPoolState`
+  - 输入：`crmOwnershipStatus`、`crmLastAcquiredAt`、`crmLastFollowedUpAt`、`crmLastClosedWonAt` 和公海规则配置
+  - 输出：`effectiveOwnershipStatus`、`expectedPoolReturnAt`、`shouldReturnToPublicPool`、`shouldNotifyOwner`
+  - 目的：先把退公海和提醒语义固化进共享层，后续再挂到 worker、服务端任务和 UI
+- `getCrmPersonProtectionState`
+  - 输入：`companyId` 或 `company.id`，以及 `company.crmOwnershipStatus`
+  - 输出：联系人是否受保护，以及原因 `UNFILED_CONTACT` / `PUBLIC_POOL_COMPANY` / `OWNED_COMPANY`
+  - 目的：明确“未建档联系人不受保护，挂到公海客户上的联系人也不受保护”
+- 共享实现位置：
+  - `packages/twenty-shared/src/utils/crm/computeCrmCompanyPoolState.ts`
+  - `packages/twenty-shared/src/utils/crm/getCrmPersonProtectionState.ts`
+
 ## 需求
 
 ### 功能需求
