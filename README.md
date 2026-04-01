@@ -44,6 +44,7 @@
 - [Twenty 基线决策](docs/twenty-baseline.md)
 - [Twenty 差异清单](docs/twenty-gap-analysis.md)
 - [Twenty 模块清单](docs/twenty-module-plan.md)
+- [Twenty 导入步骤](docs/twenty-import-plan.md)
 - [实现规格](specs/mvp.md)
 - [Codex 启动清单](docs/codex-kickoff.md)
 

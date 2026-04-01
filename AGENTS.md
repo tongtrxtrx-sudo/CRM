@@ -31,6 +31,7 @@
 - [twenty-baseline.md](/D:/work/CRM/docs/twenty-baseline.md)：为何选择 Twenty 作为上游基线，以及本仓库的裁剪策略。
 - [twenty-gap-analysis.md](/D:/work/CRM/docs/twenty-gap-analysis.md)：本仓库需求与 Twenty 上游能力的差异清单和实施优先级。
 - [twenty-module-plan.md](/D:/work/CRM/docs/twenty-module-plan.md)：基于 Twenty 的首版模块启用、弱化、禁用和本地扩展清单。
+- [twenty-import-plan.md](/D:/work/CRM/docs/twenty-import-plan.md)：Twenty 导入实施步骤、分支策略和上游同步方案。
 - [mvp.md](/D:/work/CRM/specs/mvp.md)：实现规格和验证要求。
 
 ## 规范产物
@@ -41,6 +42,7 @@
 - [twenty-baseline.md](/D:/work/CRM/docs/twenty-baseline.md)
 - [twenty-gap-analysis.md](/D:/work/CRM/docs/twenty-gap-analysis.md)
 - [twenty-module-plan.md](/D:/work/CRM/docs/twenty-module-plan.md)
+- [twenty-import-plan.md](/D:/work/CRM/docs/twenty-import-plan.md)
 - [mvp.md](/D:/work/CRM/specs/mvp.md)
 - 当 CRM 的实体模型、关键流程、权限模型、集成边界或上游基线策略发生变化时，先更新这些文档，再改代码。
 
@@ -153,6 +155,7 @@
 - [twenty-baseline.md](/D:/work/CRM/docs/twenty-baseline.md)
 - [twenty-gap-analysis.md](/D:/work/CRM/docs/twenty-gap-analysis.md)
 - [twenty-module-plan.md](/D:/work/CRM/docs/twenty-module-plan.md)
+- [twenty-import-plan.md](/D:/work/CRM/docs/twenty-import-plan.md)
 - [mvp.md](/D:/work/CRM/specs/mvp.md)
 - [codex-kickoff.md](/D:/work/CRM/docs/codex-kickoff.md)
 - 如果后续新增了数据模型、权限模型、集成清单或迁移文档，把它们加入这里。
@@ -170,6 +173,7 @@
   - [architecture.md](/D:/work/CRM/docs/architecture.md)
   - [twenty-baseline.md](/D:/work/CRM/docs/twenty-baseline.md)
   - [twenty-module-plan.md](/D:/work/CRM/docs/twenty-module-plan.md)
+  - [twenty-import-plan.md](/D:/work/CRM/docs/twenty-import-plan.md)
   - [mvp.md](/D:/work/CRM/specs/mvp.md)
 - 当本仓库对 Twenty 的采用方式、裁剪范围或上游同步策略变化时，必须先更新 [twenty-baseline.md](/D:/work/CRM/docs/twenty-baseline.md)。
 - 在声称任务完成前，必须提供真实验证证据；如果验证命令尚未建立，需要明确说明缺口。
