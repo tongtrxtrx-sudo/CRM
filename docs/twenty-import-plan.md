@@ -204,6 +204,7 @@
   - 在 mock backend 配合静态预览下，访问根路径 `/` 后前端可正常跳转到 `/welcome`，页面标题为“登录或创建账户”，且不再进入 `Unable to Reach Back-end` 错误页
   - `GET /client-config` 与 `POST /metadata` 在 mock backend 下均已返回 `200`
   - 通过 `preview:front` 入口访问 `/welcome` 时，深链接 fallback 已生效
+  - `packages/twenty-front/project.json` 的 `serve` 目标与 `packages/twenty-front/package.json` 的 `start:prod` 均已改为本地静态预览脚本，不再依赖临时安装 `serve`
   - 当前前端首屏剩余的是非阻塞控制台警告，例如未编译 i18n 提示和普通 debug 日志
   - 当前下一步应转向更高一级的应用启动验证，例如与更完整的 mock 后端或真实本地后端联调
 
