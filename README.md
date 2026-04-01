@@ -21,19 +21,23 @@
 ### 安装
 
 ```bash
-# fill this with the real install command
+node .yarn/releases/yarn-4.9.2.cjs install
 ```
 
 ### 本地运行
 
 ```bash
-# fill this with the real run command
+node .yarn/releases/yarn-4.9.2.cjs nx run twenty-front:build
+node .yarn/releases/yarn-4.9.2.cjs --cwd packages/twenty-front run start:mock-backend
+node .yarn/releases/yarn-4.9.2.cjs run preview:front
 ```
 
 ### 测试
 
 ```bash
-# fill this with the real test command
+node .yarn/releases/yarn-4.9.2.cjs nx run twenty-shared:build
+node .yarn/releases/yarn-4.9.2.cjs nx run twenty-ui:build
+node .yarn/releases/yarn-4.9.2.cjs nx run twenty-front:build
 ```
 
 ## 仓库文档
@@ -59,4 +63,7 @@
 
 - 优先在仓库根目录 `AGENTS.md` 中记录仓库特有规则。
 - 只在确实需要本地覆盖时使用 `.codex/config.toml`。
-- 在真实命令和目录结构明确后，及时替换本文档中的占位内容。
+- 当前前端 smoke test 推荐入口：
+  - 先启动 `packages/twenty-front` 下的 `start:mock-backend`
+  - 再从仓库根目录运行 `preview:front`
+  - 该入口支持 SPA history fallback，可直接访问 `/welcome`

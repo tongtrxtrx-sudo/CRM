@@ -31,7 +31,7 @@
     "serve": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "npx serve -s {projectRoot}/build"
+        "command": "node {projectRoot}/scripts/preview-static.mjs"
       }
     },
     "start": {

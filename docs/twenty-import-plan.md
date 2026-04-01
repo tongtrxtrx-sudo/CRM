@@ -198,12 +198,14 @@
   - 已新增本地最小 mock backend，用于前端 smoke test：
     - `node packages/twenty-front/scripts/mock-preview-backend.mjs`
     - 或使用 `packages/twenty-front/package.json` 中的 `start:mock-backend`
+  - 已新增本地静态预览入口，支持 SPA history fallback：
+    - `node .yarn/releases/yarn-4.9.2.cjs run preview:front`
+    - 或直接运行 `packages/twenty-front/package.json` 中的 `preview:static`
   - 在 mock backend 配合静态预览下，访问根路径 `/` 后前端可正常跳转到 `/welcome`，页面标题为“登录或创建账户”，且不再进入 `Unable to Reach Back-end` 错误页
   - `GET /client-config` 与 `POST /metadata` 在 mock backend 下均已返回 `200`
-  - 当前已知剩余限制：
-    - 用普通静态服务器直接打开深链接 `/welcome` 会因缺少 SPA history fallback 返回 `404`
-    - 当前前端首屏剩余的是非阻塞控制台警告，例如未编译 i18n 提示和普通 debug 日志
-  - 当前下一步应转向更高一级的应用启动验证，优先选择带 history fallback 的预览方式
+  - 通过 `preview:front` 入口访问 `/welcome` 时，深链接 fallback 已生效
+  - 当前前端首屏剩余的是非阻塞控制台警告，例如未编译 i18n 提示和普通 debug 日志
+  - 当前下一步应转向更高一级的应用启动验证，例如与更完整的 mock 后端或真实本地后端联调
 
 ### 阶段 8 - 第二轮本地扩展
 
